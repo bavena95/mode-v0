@@ -35,11 +35,21 @@ export function ColorPicker({
   const [copied, setCopied] = useState(false)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const hueCanvasRef = useRef<HTMLCanvasElement>(null)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
     drawColorWheel()
     drawHueBar()
   }, [color])
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
 
   const drawColorWheel = () => {
     const canvas = canvasRef.current
@@ -183,7 +193,14 @@ export function ColorPicker({
 
     navigator.clipboard.writeText(value)
     setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+    
+    // Clear any existing timeout
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
+    
+    // Set new timeout and store reference
+    timeoutRef.current = setTimeout(() => setCopied(false), 2000)
   }
 
   const updateColorValue = (value: string) => {
