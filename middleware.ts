@@ -1,14 +1,15 @@
-import { stackServerApp } from "@/lib/stack-auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function middleware(req: NextRequest) {
-  // --- INÍCIO DA MODIFICAÇÃO ---
-  // Adicione esta linha para pular toda a lógica de autenticação durante os testes.
+  // 🛌 MIDDLEWARE ADORMECIDO - Autenticação desabilitada para desenvolvimento
+  // Permite acesso a todas as rotas sem verificação de autenticação
   return NextResponse.next();
-  // --- FIM DA MODIFICAÇÃO ---
 
-  /* --- CÓDIGO ORIGINAL COMENTADO ---
-
+  /* 
+  === CÓDIGO DE AUTENTICAÇÃO ORIGINAL (COMENTADO) ===
+  
+  import { stackServerApp } from "@/lib/stack-auth";
+  
   const { pathname } = req.nextUrl;
 
   // Ignora rotas de API e arquivos estáticos

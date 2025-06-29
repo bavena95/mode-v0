@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useUser } from "@stackframe/stack";
 import { Button } from "@/components/ui/button";
 import { AuthButton } from "@/components/auth/auth-button";
 import { MagnetIcon as Magic } from "lucide-react";
 
 export function Header() {
-  const user = useUser();
+  // 🛌 SIMULANDO USUÁRIO LOGADO PARA DESENVOLVIMENTO
+  const mockUser = { displayName: "Dev User" }; // Simula usuário logado
 
   return (
     // Container para posicionar o header no topo da tela com margens
@@ -32,7 +32,7 @@ export function Header() {
 
         {/* Lado Direito: Botões de Autenticação */}
         <div className="flex items-center gap-2">
-          {user ? (
+          {mockUser ? (
             // Se o usuário estiver logado, mostre o botão de avatar
             <AuthButton />
           ) : (
